@@ -39,4 +39,13 @@ read a
 esac
 done
 
+else
+
+echo ""
+echo "No has introducido un valor númerico."
+echo ""
+
+bash 3.sh
+exit
+
 fi

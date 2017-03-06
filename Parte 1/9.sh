@@ -18,17 +18,17 @@ function ind_rp
 {
 	if [[ $1 != "" && $2 != "" && $3 != "" ]];
 	then #Comprobar los tipos
-		len=${#1}
 		x=$1
 		c=$2
 		p=$3
+		len=${#x}
 		res=""
-		if [[ p > 0 ]];
+		if [[ $p > 0 ]];
 		then
 			res+="${x:0:$((p - 1))}"
 		fi
-		res+=c
-		if [[ p < $((len - 1)) ]];
+		res+=$c
+		if [[ $p < $((len - 1)) ]];
 		then
 			res+="${x:$p}"
 		fi
@@ -75,10 +75,11 @@ function get_number_pos
 #	fi
 	res=$BASHPID
 	pos=0
-	cnt=$(get_random 1 $(${#BASHPID} - 2))
+	cnt=$(get_random 1 $((${#BASHPID} - 1)))
+	echo "CNT: $cnt"
 	for i in `seq 0 $cnt`;
 	do
-		res=$((ind_rp $res "_" $i))
+		res=$(ind_rp $res "_" $i)
 		pos=$((++pos))
 	done
 	echo "($BASHPID) Parte del PID es: $res"
@@ -114,7 +115,8 @@ function get_pista
 	echo "¡Pista! $pista"
 }
 
-echo $(get_number_pos)
+#echo $(get_number_pos)
+echo $(ind_rp "............" "A" 5)
 exit
 
 echo "¡Cuidado! Este programa es ciclico, si quieres salir pulsa Ctrl+C"

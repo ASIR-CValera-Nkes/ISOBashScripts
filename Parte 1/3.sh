@@ -31,7 +31,7 @@ read a
 	expr $prim / $sec
 	;;
 	5) echo "Saliendo..." #Mostrar contador??
-	  exit 1
+	  exit
 	;;
 	*)
 	  echo "No has seleccionado una opción válida."

@@ -1,7 +1,9 @@
 #!/bin/bash
 
-curhour=`echo $(bash "$(pwd)/get_date.sh" 4) | cut -d: -f1`
-source get_user.sh
+source ../api.sh
+
+curhour=`date +%H`
+user=`get_user`
 
 if [[ $curhour -ge 5 && $curhour -lt 13 ]];
 then

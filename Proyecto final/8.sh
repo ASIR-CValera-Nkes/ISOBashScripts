@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../api.sh
+
 fich="fichero2.txt"
 
 #Esto es para el ejercicio 9.sh no hacer caso
@@ -9,7 +11,8 @@ then
 fi
 #Hacer caso
 
-palabras=(`cat $fich`)
+words=(`cat $fich`)
+palabras=(${words[@]:0:3})
 lastpalabra=`echo $palabras | cut -d$' ' -f1`
 iguales=1
 len=${#palabras[@]}
@@ -21,6 +24,7 @@ then
 		if [ $i != $lastpalabra ];
 		then
 			iguales=0
+			break
 		fi
 		lastpalabra=$i
 	done
@@ -29,9 +33,11 @@ else
 	exit
 fi
 
+pals=`join_by , "${palabras[@]}"`
+
 if [ $iguales == 1 ];
 then
-	echo "Las $len palabras son iguales."
+	echo "Las $len palabras: $pals; son iguales."
 else
-	echo "Las $len palabras NO son iguales."
+	echo "Las $len palabras: $pals; NO son iguales."
 fi

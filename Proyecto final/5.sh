@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source get_user.sh #Equivalente a un include
+source ../api.sh #Equivalente a un include
+user=`get_user`
 
 if [[ $user == "Benito" ]];
 then

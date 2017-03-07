@@ -1,10 +1,6 @@
 #!/bin/bash
 
 curhour=`echo $(bash "$(pwd)/get_date.sh" 4) | cut -d: -f1`
-
-echo $curhour
-exit
-
 source get_user.sh
 
 if [[ $curhour -ge 5 && $curhour -lt 13 ]];

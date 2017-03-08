@@ -1,0 +1,2 @@
+DNI|apellido1|apellido2|nombre|edad|fecha_nacimiento
+

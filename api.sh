@@ -46,3 +46,23 @@ function count_list
 #function show_results { e4cho ""; }
 
 function join_by { local IFS="$1"; shift; echo "$*"; }
+
+function escribir
+{
+	if [[ $1 != "" ]];
+	then
+		if [[ -e $1 ]];
+		then
+			echo "$2" >> "$1"
+		else
+			echo "El archivo $2 no existe."
+		fi
+	else
+		echo "Debes especificar un archivo para escribir algo, aunque sea texto vacío."
+	fi
+}
+
+if [[ $_ == 0 ]];
+then #Nunca debes ejecutar este script, siempre llamalo con el comando source
+	echo "Tonto"
+fi

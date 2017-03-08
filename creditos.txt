@@ -1,0 +1,5 @@
+Scripts realizados por Álvaro Rodríguez García, alumno del I.E.S. Cura Valera, a fecha de Marzo de 2017
+
+Eres libre de hacer lo que quieras con ellos.
+
+Ejecuta todos los scripts usando el comando "bash", ya que no me he entrentenido en cambiarle los permisos.

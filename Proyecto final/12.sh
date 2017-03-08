@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../api.sh
+
 #Esto para hacer la prueba
 
 if [[ $# == 0 ]];
@@ -31,13 +33,7 @@ fi
 arr=($*)
 archivo=${arr[@]:0:1}
 
-for par in ${arr[@]:1};
+for fichero in ${arr[@]:1};
 do
-	fichero=$par
-	if [ -e $fichero ];
-	then
-		cat $fichero >> $archivo
-	else
-		echo "El archivo $fichero no existe."
-	fi
+	escribir `cat $fichero` $archivo
 done

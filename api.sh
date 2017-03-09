@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [[ $_ == 0 ]];
+then #Nunca debes ejecutar este script, siempre llamalo con el comando source
+        echo "Tonto"
+fi
+
 function get_user
 {
 	usernick=`cat /etc/passwd | grep "$(whoami)" | cut -d: -f1`
@@ -62,7 +67,3 @@ function escribir
 	fi
 }
 
-if [[ $_ == 0 ]];
-then #Nunca debes ejecutar este script, siempre llamalo con el comando source
-	echo "Tonto"
-fi

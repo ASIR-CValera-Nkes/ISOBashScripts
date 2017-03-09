@@ -17,7 +17,7 @@ lastpalabra=`echo $palabras | cut -d$' ' -f1`
 iguales=1
 len=${#palabras[@]}
 
-if [[ len > 1 ]];
+if [[ $len > 1 ]];
 then
 	for i in ${palabras[@]:1};
 	do

@@ -2,19 +2,6 @@
 
 source ../api.sh
 
-campos=`head datos.txt -n1`
-proccampos=(`echo $campos | tr "|" " "`)
-len=${#proccampos[@]}
-
-#Ya que esto va a ser una funcin local no voy a ser muy estricto con los tipos
-function obtener_dato
-{
-	for ((i=0; $i < $len; ++i));
-	do
-		echo ""
-	done
-}
-
 function comprobar_tipo
 {
 	nombre_campo=$1
@@ -23,14 +10,12 @@ function comprobar_tipo
 	then
 		echo "El nombre de campo '$nombre_campo' no existe."
 	fi
-	[[ $nombre_campo == "DNI" && $valor =~ "^[0-9]+{8}[A-Z]$"
-	|| ($nombre_campo == "apellido1" || $nombre_campo == "apellido2" || $nombre_campo == "nombre") && $valor =~ "^[A-Za-z]$"
-	|| $nombre_campo == "edad" && $valor =~ "^[0-9]+{1-3}$" && $valor > 0 && $valor < 150 || $nombre_campo == "fecha_nacimiento" && $valor =~ "^\d+{2}(/|-)\d+{2}(/|-)\d+{2,4}" ]] && valido=1 || valido=0
+	[[ $nombre_campo == "DNI" && $valor =~ ^[0-9]{8}[A-Z]$
+	|| ($nombre_campo == "apellido1" || $nombre_campo == "apellido2" || $nombre_campo == "nombre") && $valor =~ ^[A-Za-z\ ]$
+	|| $nombre_campo == "edad" && $valor =~ ^[0-9]{1-3}$ && $valor > 0 && $valor < 150
+	|| $nombre_campo == "fecha_nacimiento" && $valor =~ ^\d{2}(/|-)\d{2}(/|-)\d{2,4} ]] && valido=1 || valido=0
 	echo $valido
 }
-
-echo `comprobar_tipo "DNI" "23333300F"`
-exit
 
 if [[ ! -e "datos.txt" ]];
 then
@@ -39,7 +24,7 @@ then
 fi
 
 iters=10 #Iteraciones que por defecto vamos a hacer cada iteración es una fila
-contador=0 #Contador que el while usa para saber cuando parar
+contador=1 #Contador que el while usa para saber cuando parar
 numerico="^[0-9]+$" #Expresión regular que sirve para saber si la variable es un número o no, básicamente, ^es el inicio 0-9 es el rango de valores que coge, el + quiere decir que se pueden repetir infinitamente estos
 #y el dolar el final de la string, buscamos basicamente que la cadena de caracteres o stringm sea solo numeros, entonces, podremos decir que es un número
 
@@ -59,11 +44,25 @@ echo "Inserte $iters filas con el siguiente formato de campos (DNI|apellido1|ape
 echo "Para salir en caso necesario, utilice Ctrl+C"
 echo ""
 
+campos=(`head datos.txt -n1 | tr "|" " "`)
+
 while [[ $contador < $iters ]];
 do #Esto lo hacemos mientras que el numero de filas que hayamos insertado sea menor al que hayamos establecido
 	fila="" #Declaramos el valor de la fila
-	fila=`obtener_dato`
-	#fila=${fila:0:-1} #Una vez terminado de introducir campos separados por |, borramos el último caracter sobrante
+	for ((i=0; i<${#campos[@]}; ++i));
+        do
+		campo=${campos[$i]}
+                read -p "Introduce el $campo: " valor
+                if [[ `comprobar_tipo "$campo" "$valor"` == 0 ]];
+                then
+                        echo "Valor introducido para $campo no vlido, por favor vuelve a introducirlo."
+                        echo ""
+			((--i))
+		else
+			fila+="$valor|"
+                fi
+        done
+	fila=${fila:0:-1} #Una vez terminado de introducir campos separados por |, borramos el último caracter sobrante
 	escribir "datos.txt" $fila #Y escribimos el resultado a nuestro txt
 	((++contador)) #Incrementamos el valor del contador por uno y proseguimos, hasta  que el while diga que es suficiente.
 done

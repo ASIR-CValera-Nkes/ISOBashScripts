@@ -66,4 +66,3 @@ function escribir
 		echo "Debes especificar un archivo para escribir algo, aunque sea texto vacío."
 	fi
 }
-

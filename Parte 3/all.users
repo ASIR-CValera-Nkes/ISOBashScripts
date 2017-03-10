@@ -1,0 +1,3 @@
+syslog:x:101:104::/home/syslog:/bin/false
+Alvaro:x:1000:1000:"",,,:/home/Alvaro:/bin/bash
+aatest:x:1001:1001:,,,:/home/aatest:/bin/bash
